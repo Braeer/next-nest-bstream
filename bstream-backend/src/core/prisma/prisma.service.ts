@@ -1,5 +1,6 @@
 import {
 	Injectable,
+	Logger,
 	type OnModuleDestroy,
 	type OnModuleInit
 } from '@nestjs/common'
@@ -11,7 +12,9 @@ export class PrismaService
 	implements OnModuleInit, OnModuleDestroy
 {
 	public async onModuleInit() {
+		Logger.log('Connecting to the database...')
 		await this.$connect()
+		Logger.log('Connected to the database successfully')
 	}
 
 	public async onModuleDestroy() {

@@ -1,0 +1,30 @@
+import { StreamModel } from '../../stream/models/stream.model'
+import type { Category, Stream } from '@/prisma/generated'
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+
+@ObjectType()
+export class CategoryModel implements Category {
+	@Field(() => ID)
+	public id: string
+
+	@Field(() => String)
+	public title: string
+
+	@Field(() => String)
+	public slug: string
+
+	@Field(() => String, { nullable: true })
+	public description: string
+
+	@Field(() => String)
+	public thumbnailUrl: string
+
+	@Field(() => [StreamModel], { nullable: true })
+	public streams: StreamModel[]
+
+	@Field(() => Date)
+	public createdAt: Date
+
+	@Field(() => Date)
+	public updatedAt: Date
+}

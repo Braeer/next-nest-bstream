@@ -21,7 +21,10 @@ async function main() {
 			prisma.user.deleteMany(),
 			prisma.socialLink.deleteMany(),
 			prisma.stream.deleteMany(),
-			prisma.category.deleteMany()
+			prisma.category.deleteMany(),
+			prisma.notification.deleteMany(),
+			prisma.notificationSettings.deleteMany(),
+			prisma.follow.deleteMany()
 		])
 
 		await prisma.category.createMany({
@@ -57,7 +60,7 @@ async function main() {
 				if (!userExists) {
 					const createdUser = await tx.user.create({
 						data: {
-							email: `${username}@braeer.io`,
+							email: `${username}@timurbagaev.ru`,
 							password: await hash('12345678'),
 							username,
 							displayName: username,

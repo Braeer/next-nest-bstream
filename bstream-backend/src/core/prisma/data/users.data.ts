@@ -1,8 +1,8 @@
 export const USERNAMES = [
 	'coder',
 	'stintik',
-	'alex',
-	'bella',
+	'braeer',
+	'testing',
 	'carter',
 	'dylan',
 	'ethan',

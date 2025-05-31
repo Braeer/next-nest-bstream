@@ -1,4 +1,5 @@
 import { MailService } from '../../libs/mail/mail.service'
+import { TelegramService } from '../../libs/telegram/telegram.service'
 import { DeactivateAccountInput } from './inputs/deactivate-account.input'
 import { TokenType, type User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
@@ -19,7 +20,8 @@ export class DeactivateService {
 	public constructor(
 		private readonly prismaService: PrismaService,
 		private readonly configService: ConfigService,
-		private readonly mailService: MailService
+		private readonly mailService: MailService,
+		private readonly telegramService: TelegramService
 	) {}
 
 	public async deactivate(
@@ -108,6 +110,21 @@ export class DeactivateService {
 			deactivateToken.token,
 			metadata
 		)
+
+		if (!deactivateToken.user) {
+			throw new NotFoundException('Пользователь не найден')
+		}
+
+		if (
+			deactivateToken.user.notificationSettings?.telegramNotifications &&
+			deactivateToken.user.telegramId
+		) {
+			await this.telegramService.sendDeactivateToken(
+				deactivateToken.user.telegramId,
+				deactivateToken.token,
+				metadata
+			)
+		}
 
 		return true
 	}

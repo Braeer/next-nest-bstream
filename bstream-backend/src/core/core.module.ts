@@ -16,6 +16,9 @@ import { StorageModule } from '../modules/libs/storage/storage.module'
 import { StripeModule } from '../modules/libs/stripe/stripe.module'
 import { TelegramModule } from '../modules/libs/telegram/telegram.module'
 import { NotificationModule } from '../modules/notification/notification.module'
+import { PlanModule } from '../modules/sponsorship/plan/plan.module'
+import { SubscriptionModule } from '../modules/sponsorship/subscription/subscription.module'
+import { TransactionModule } from '../modules/sponsorship/transaction/transaction.module'
 import { IngressModule } from '../modules/stream/ingress/ingress.module'
 import { StreamModule } from '../modules/stream/stream.module'
 import { WebhookModule } from '../modules/webhook/webhook.module'
@@ -72,7 +75,10 @@ import { GraphQLModule } from '@nestjs/graphql'
 		FollowModule,
 		ChannelModule,
 		NotificationModule,
-		TelegramModule
+		TelegramModule,
+		PlanModule,
+		TransactionModule,
+		SubscriptionModule
 	]
 })
 export class CoreModule {}

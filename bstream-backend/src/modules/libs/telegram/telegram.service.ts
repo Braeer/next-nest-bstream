@@ -1,6 +1,6 @@
 import { BUTTONS } from './telegram.buttons'
 import { MESSAGES } from './telegram.messages'
-import { TokenType, type User } from '@/prisma/generated'
+import { type SponsorshipPlan, TokenType, type User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 import { SessionMetadata } from '@/src/shared/types/session-metadata.types'
 import { Injectable } from '@nestjs/common'
@@ -186,17 +186,17 @@ export class TelegramService extends Telegraf {
 		)
 	}
 
-	// public async sendNewSponsorship(
-	// 	chatId: string,
-	// 	plan: SponsorshipPlan,
-	// 	sponsor: User
-	// ) {
-	// 	await this.telegram.sendMessage(
-	// 		chatId,
-	// 		MESSAGES.newSponsorship(plan, sponsor),
-	// 		{ parse_mode: 'HTML' }
-	// 	)
-	// }
+	public async sendNewSponsorship(
+		chatId: string,
+		plan: SponsorshipPlan,
+		sponsor: User
+	) {
+		await this.telegram.sendMessage(
+			chatId,
+			MESSAGES.newSponsorship(plan, sponsor),
+			{ parse_mode: 'HTML' }
+		)
+	}
 
 	public async sendEnableTwoFactor(chatId: string) {
 		await this.telegram.sendMessage(chatId, MESSAGES.enableTwoFactor, {

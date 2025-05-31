@@ -1,9 +1,12 @@
 import { LiveKitService } from '../libs/livekit/livekit.service'
+import { StripeService } from '../libs/stripe/stripe.service'
 import { TelegramService } from '../libs/telegram/telegram.service'
 import { NotificationService } from '../notification/notification.service'
+import { TransactionStatus } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import Stripe from 'stripe'
 
 @Injectable()
 export class WebhookService {
@@ -11,9 +14,9 @@ export class WebhookService {
 		private readonly prismaService: PrismaService,
 		private readonly notificationService: NotificationService,
 		private readonly livekitService: LiveKitService,
-		private readonly telegramService: TelegramService
-		// private readonly configService: ConfigService,
-		// private readonly stripeService: StripeService,
+		private readonly telegramService: TelegramService,
+		private readonly configService: ConfigService,
+		private readonly stripeService: StripeService
 	) {}
 
 	public async receiveWebhookLiveKit(body: string, authorization: string) {
@@ -104,98 +107,111 @@ export class WebhookService {
 		}
 	}
 
-	// public async receiveWebhookStripe(event: Stripe.Event) {
-	// 	const session = event.data.object as Stripe.Checkout.Session
+	public async receiveWebhookStripe(event: Stripe.Event) {
+		const session = event.data.object as Stripe.Checkout.Session
 
-	// 	if (event.type === 'checkout.session.completed') {
-	// 		const planId = session.metadata.planId
-	// 		const userId = session.metadata.userId
-	// 		const channelId = session.metadata.channelId
+		if (!session.metadata) {
+			return new BadRequestException('Invalid Stripe session metadata')
+		}
 
-	// 		const expiresAt = new Date()
-	// 		expiresAt.setDate(expiresAt.getDay() + 30)
+		if (event.type === 'checkout.session.completed') {
+			const planId = session.metadata.planId
+			const userId = session.metadata.userId
+			const channelId = session.metadata.channelId
 
-	// 		const sponsorshipSubscription =
-	// 			await this.prismaService.sponsorshipSubscription.create({
-	// 				data: {
-	// 					expiresAt,
-	// 					planId,
-	// 					userId,
-	// 					channelId
-	// 				},
-	// 				include: {
-	// 					plan: true,
-	// 					user: true,
-	// 					channel: {
-	// 						include: {
-	// 							notificationSettings: true
-	// 						}
-	// 					}
-	// 				}
-	// 			})
+			const expiresAt = new Date()
+			expiresAt.setDate(expiresAt.getDay() + 30)
 
-	// 		await this.prismaService.transaction.updateMany({
-	// 			where: {
-	// 				stripeSubscriptionId: session.id,
-	// 				status: TransactionStatus.PENDING
-	// 			},
-	// 			data: {
-	// 				status: TransactionStatus.SUCCESS
-	// 			}
-	// 		})
+			const sponsorshipSubscription =
+				await this.prismaService.sponsorshipSubscription.create({
+					data: {
+						expiresAt,
+						planId,
+						userId,
+						channelId
+					},
+					include: {
+						plan: true,
+						user: true,
+						channel: {
+							include: {
+								notificationSettings: true
+							}
+						}
+					}
+				})
 
-	// 		if (
-	// 			sponsorshipSubscription.channel.notificationSettings
-	// 				.siteNotifications
-	// 		) {
-	// 			await this.notificationService.createNewSponsorship(
-	// 				sponsorshipSubscription.channel.id,
-	// 				sponsorshipSubscription.plan,
-	// 				sponsorshipSubscription.user
-	// 			)
-	// 		}
+			await this.prismaService.transaction.updateMany({
+				where: {
+					stripeSubscriptionId: session.id,
+					status: TransactionStatus.PENDING
+				},
+				data: {
+					status: TransactionStatus.SUCCESS
+				}
+			})
 
-	// 		if (
-	// 			sponsorshipSubscription.channel.notificationSettings
-	// 				.telegramNotifications &&
-	// 			sponsorshipSubscription.channel.telegramId
-	// 		) {
-	// 			await this.telegramService.sendNewSponsorship(
-	// 				sponsorshipSubscription.channel.telegramId,
-	// 				sponsorshipSubscription.plan,
-	// 				sponsorshipSubscription.user
-	// 			)
-	// 		}
-	// 	}
+			if (
+				!sponsorshipSubscription.channel ||
+				!sponsorshipSubscription.channel.notificationSettings ||
+				!sponsorshipSubscription.plan ||
+				!sponsorshipSubscription.user
+			) {
+				return new BadRequestException('Channel not found')
+			}
 
-	// 	if (event.type === 'checkout.session.expired') {
-	// 		await this.prismaService.transaction.updateMany({
-	// 			where: {
-	// 				stripeSubscriptionId: session.id
-	// 			},
-	// 			data: {
-	// 				status: TransactionStatus.EXPIRED
-	// 			}
-	// 		})
-	// 	}
+			if (
+				sponsorshipSubscription.channel.notificationSettings
+					.siteNotifications
+			) {
+				await this.notificationService.createNewSponsorship(
+					sponsorshipSubscription.channel.id,
+					sponsorshipSubscription.plan,
+					sponsorshipSubscription.user
+				)
+			}
 
-	// 	if (event.type === 'checkout.session.async_payment_failed') {
-	// 		await this.prismaService.transaction.updateMany({
-	// 			where: {
-	// 				stripeSubscriptionId: session.id
-	// 			},
-	// 			data: {
-	// 				status: TransactionStatus.FAILED
-	// 			}
-	// 		})
-	// 	}
-	// }
+			if (
+				sponsorshipSubscription.channel.notificationSettings
+					.telegramNotifications &&
+				sponsorshipSubscription.channel.telegramId
+			) {
+				await this.telegramService.sendNewSponsorship(
+					sponsorshipSubscription.channel.telegramId,
+					sponsorshipSubscription.plan,
+					sponsorshipSubscription.user
+				)
+			}
+		}
 
-	// public constructStripeEvent(payload: any, signature: any) {
-	// 	return this.stripeService.webhooks.constructEvent(
-	// 		payload,
-	// 		signature,
-	// 		this.configService.getOrThrow<string>('STRIPE_WEBHOOK_SECRET')
-	// 	)
-	// }
+		if (event.type === 'checkout.session.expired') {
+			await this.prismaService.transaction.updateMany({
+				where: {
+					stripeSubscriptionId: session.id
+				},
+				data: {
+					status: TransactionStatus.EXPIRED
+				}
+			})
+		}
+
+		if (event.type === 'checkout.session.async_payment_failed') {
+			await this.prismaService.transaction.updateMany({
+				where: {
+					stripeSubscriptionId: session.id
+				},
+				data: {
+					status: TransactionStatus.FAILED
+				}
+			})
+		}
+	}
+
+	public constructStripeEvent(payload: any, signature: any) {
+		return this.stripeService.webhooks.constructEvent(
+			payload,
+			signature,
+			this.configService.getOrThrow<string>('STRIPE_WEBHOOK_SECRET')
+		)
+	}
 }

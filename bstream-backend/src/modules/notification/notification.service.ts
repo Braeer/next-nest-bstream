@@ -1,5 +1,10 @@
 import { ChangeNotificationsSettingsInput } from './inputs/change-notifications-settings.input'
-import { NotificationType, TokenType, User } from '@/prisma/generated'
+import {
+	NotificationType,
+	type SponsorshipPlan,
+	TokenType,
+	User
+} from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 import { generateToken } from '@/src/shared/utils/generate-token.util'
 import { BadRequestException, Injectable } from '@nestjs/common'
@@ -76,26 +81,26 @@ export class NotificationService {
 		return notification
 	}
 
-	// public async createNewSponsorship(
-	// 	userId: string,
-	// 	plan: SponsorshipPlan,
-	// 	sponsor: User
-	// ) {
-	// 	const notification = await this.prismaService.notification.create({
-	// 		data: {
-	// 			message: `<b className='font-medium'>У вас новый спонсор!</b>
-	// 			<p>Пользователь <a href='/${sponsor.username}' className='font-semibold'>${sponsor.displayName}</a> стал вашим спонсором, выбрав план <strong>${plan.title}</strong>.</p>`,
-	// 			type: NotificationType.NEW_SPONSORSHIP,
-	// 			user: {
-	// 				connect: {
-	// 					id: userId
-	// 				}
-	// 			}
-	// 		}
-	// 	})
+	public async createNewSponsorship(
+		userId: string,
+		plan: SponsorshipPlan,
+		sponsor: User
+	) {
+		const notification = await this.prismaService.notification.create({
+			data: {
+				message: `<b className='font-medium'>У вас новый спонсор!</b>
+				<p>Пользователь <a href='/${sponsor.username}' className='font-semibold'>${sponsor.displayName}</a> стал вашим спонсором, выбрав план <strong>${plan.title}</strong>.</p>`,
+				type: NotificationType.NEW_SPONSORSHIP,
+				user: {
+					connect: {
+						id: userId
+					}
+				}
+			}
+		})
 
-	// 	return notification
-	// }
+		return notification
+	}
 
 	public async createEnableTwoFactor(userId: string) {
 		const notification = await this.prismaService.notification.create({

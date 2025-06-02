@@ -1,4 +1,4 @@
-import { UserModel } from '../account/models/user.model'
+import { AuthModel } from '../account/models/auth.model'
 import { VerificationInput } from './inputs/verification.input'
 import { VerificationService } from './verification.service'
 import { UserAgent } from '@/src/shared/decorators/user-agent.decorator'
@@ -11,7 +11,7 @@ export class VerificationResolver {
 		private readonly verificationService: VerificationService
 	) {}
 
-	@Mutation(() => UserModel, { name: 'verifyAccount' })
+	@Mutation(() => AuthModel, { name: 'verifyAccount' })
 	public async verify(
 		@Context() { req }: GqlContext,
 		@Args('data') input: VerificationInput,

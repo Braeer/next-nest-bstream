@@ -8,6 +8,10 @@ import {
 } from '@/components/ui/common/Tabs'
 import { Heading } from '@/components/ui/elements/Heading'
 
+import { ChangeEmailForm } from './account/ChangeEmailForm'
+import { ChangePasswordForm } from './account/ChangePasswordForm'
+import { DeactivateCard } from './account/DeactivateCard'
+import { WrapperTotp } from './account/totp/WrapperTotp'
 import { ChangeAvatarForm } from './profile/ChangeAvatarForm'
 import { ChangeInfoForm } from './profile/ChangeInfoForm'
 import { SocialLinksForm } from './profile/social-links-form/SocialLinksForm'
@@ -57,22 +61,22 @@ export function UserSettings() {
 							title={t('account.header.heading')}
 							description={t('account.header.description')}
 						/>
-						{/* <ChangeEmailForm />
-						<ChangePasswordForm /> */}
+						<ChangeEmailForm />
+						<ChangePasswordForm />
 						<Heading
 							title={t('account.header.securityHeading')}
 							description={t(
 								'account.header.securityDescription'
 							)}
 						/>
-						{/* <WrapperTotp /> */}
+						<WrapperTotp />
 						<Heading
 							title={t('account.header.deactivationHeading')}
 							description={t(
 								'account.header.deactivationDescription'
 							)}
 						/>
-						{/* <DeactivateCard /> */}
+						<DeactivateCard />
 					</div>
 				</TabsContent>
 				<TabsContent value='appearance'>

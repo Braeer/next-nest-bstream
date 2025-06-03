@@ -1,23 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export default function middleware(request: NextRequest) {
-	const session = request.cookies.get('session')?.value
+	const { url, cookies, nextUrl } = request
+	const session = cookies.get('session')?.value
 
-	const isAuthPage = request.url.includes('/account')
+	const isAuthRoute = nextUrl.pathname.startsWith('/account')
+	const isDeactivateRoute = nextUrl.pathname === '/account/deactivate'
+	const isDashboardRoute = nextUrl.pathname.startsWith('/dashboard')
 
-	if (isAuthPage) {
-		if (session) {
-			return NextResponse.redirect(
-				new URL('/dashboard/settings', request.url)
-			)
-		}
-
-		return NextResponse.next()
+	if (!session && isDashboardRoute) {
+		return NextResponse.redirect(new URL('/account/login', url))
 	}
 
-	if (!session) {
-		return NextResponse.redirect(new URL('/account/login', request.url))
+	if (!session && isDeactivateRoute) {
+		return NextResponse.redirect(new URL('/account/login', url))
 	}
+
+	if (session && isAuthRoute && !isDeactivateRoute) {
+		return NextResponse.redirect(new URL('/dashboard/settings', url))
+	}
+
+	return NextResponse.next()
 }
 
 export const config = {

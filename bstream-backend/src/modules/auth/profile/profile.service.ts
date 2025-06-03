@@ -32,7 +32,7 @@ export class ProfileService {
 
 		const fileName = `/channels/${user.username}.webp`
 
-		if (file.fileName && file.fileName.endWith('.gif')) {
+		if (file.fileName && file.fileName.endsWith('.gif')) {
 			const processedBuffer = await sharp(buffer, { animated: true })
 				.resize(512, 512)
 				.webp()
@@ -40,7 +40,7 @@ export class ProfileService {
 
 			await this.storageService.upload(
 				processedBuffer,
-				fileName,
+				fileName.slice(1),
 				'image/webp'
 			)
 		} else {
@@ -51,7 +51,7 @@ export class ProfileService {
 
 			await this.storageService.upload(
 				processedBuffer,
-				fileName,
+				fileName.slice(1),
 				'image/webp'
 			)
 		}

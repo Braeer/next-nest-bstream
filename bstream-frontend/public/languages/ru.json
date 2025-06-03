@@ -296,8 +296,8 @@
 						"titlePlaceholder": "Youtube",
 						"titleDescription": "Текст ссылки",
 						"urlLabel": "URL ссылки",
-						"urlPlaceholder": "https://github.com/TeaCoder52",
-						"urlDescription": "Куда ведет эта ссылка? Введите полный URL-адрес, например https://github.com/TeaCoder52",
+						"urlPlaceholder": "https://github.com/Braeer",
+						"urlDescription": "Куда ведет эта ссылка? Введите полный URL-адрес, например https://github.com/Braeer",
 						"submitButton": "Добавить",
 						"successMessage": "Ссылка на соц. сеть успешно добавлена",
 						"errorMessage": "Ошибка при добавлении ссылки на соц. сеть"

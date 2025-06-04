@@ -1,5 +1,6 @@
 query FindProfile {
 	findProfile {
+		id
 		username
 		displayName
 		email
@@ -7,5 +8,16 @@ query FindProfile {
 		bio
 		isVerified
 		isTotpEnabled
+		notificationSettings {
+			siteNotifications
+			telegramNotifications
+		}
+		stream {
+			serverUrl
+			streamKey
+			isChatEnabled
+			isChatFollowersOnly
+			isChatPremiumFollowersOnly
+		}
 	}
 }

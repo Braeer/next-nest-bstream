@@ -201,7 +201,7 @@ export type Mutation = {
 
 
 export type MutationChangeChatSettingsArgs = {
-  input: ChangeChatSettingsInput;
+  data: ChangeChatSettingsInput;
 };
 
 
@@ -640,12 +640,61 @@ export type VerifyAccountMutationVariables = Exact<{
 
 export type VerifyAccountMutation = { __typename?: 'Mutation', verifyAccount: { __typename?: 'AuthModel', message?: string | null, user?: { __typename?: 'UserModel', isEmailVerified: boolean } | null } };
 
+export type ChangeChatSettingsMutationVariables = Exact<{
+  data: ChangeChatSettingsInput;
+}>;
+
+
+export type ChangeChatSettingsMutation = { __typename?: 'Mutation', changeChatSettings: boolean };
+
+export type SendChatMessageMutationVariables = Exact<{
+  data: SendMessageInput;
+}>;
+
+
+export type SendChatMessageMutation = { __typename?: 'Mutation', sendChatMessage: { __typename?: 'ChatMessageModel', streamId: string } };
+
+export type CreateSponsorshipPlanMutationVariables = Exact<{
+  data: CreatePlanInput;
+}>;
+
+
+export type CreateSponsorshipPlanMutation = { __typename?: 'Mutation', createSponsorshipPlan: boolean };
+
+export type RemoveSponsorshipPlanMutationVariables = Exact<{
+  planId: Scalars['String']['input'];
+}>;
+
+
+export type RemoveSponsorshipPlanMutation = { __typename?: 'Mutation', removeSponsorshipPlan: boolean };
+
+export type MakePaymentMutationVariables = Exact<{
+  planId: Scalars['String']['input'];
+}>;
+
+
+export type MakePaymentMutation = { __typename?: 'Mutation', makePayment: { __typename?: 'MakePaymentModel', url: string } };
+
+export type CreateIngressMutationVariables = Exact<{
+  ingressType: Scalars['Float']['input'];
+}>;
+
+
+export type CreateIngressMutation = { __typename?: 'Mutation', createIngress: boolean };
+
 export type ChangeEmailMutationVariables = Exact<{
   data: ChangeEmailInput;
 }>;
 
 
 export type ChangeEmailMutation = { __typename?: 'Mutation', changeEmailUser: boolean };
+
+export type ChangeNotificationsSettingsMutationVariables = Exact<{
+  data: ChangeNotificationsSettingsInput;
+}>;
+
+
+export type ChangeNotificationsSettingsMutation = { __typename?: 'Mutation', changeNotificationsSettings: { __typename?: 'ChangeNotificationsSettingsResponse', telegramAuthToken?: string | null, notificationSettings: { __typename?: 'NotificationSettingsModel', siteNotifications: boolean, telegramNotifications: boolean } } };
 
 export type ChangePasswordMutationVariables = Exact<{
   data: ChangePasswordInput;
@@ -697,42 +746,12 @@ export type RemoveProfileAvatarMutationVariables = Exact<{ [key: string]: never;
 
 export type RemoveProfileAvatarMutation = { __typename?: 'Mutation', removeProfileAvatar: boolean };
 
-export type FindRecommendedChannelsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type FindRecommendedChannelsQuery = { __typename?: 'Query', findRecommendedChannels: Array<{ __typename?: 'UserModel', username: string, avatar?: string | null, isVerified: boolean, stream: { __typename?: 'StreamModel', isLive: boolean } }> };
-
-export type FindSponsorsByChannelQueryVariables = Exact<{
-  channelId: Scalars['String']['input'];
+export type RemoveSessionMutationVariables = Exact<{
+  id: Scalars['String']['input'];
 }>;
 
 
-export type FindSponsorsByChannelQuery = { __typename?: 'Query', findSponsorsByChannel: Array<{ __typename?: 'SubscriptionModel', user: { __typename?: 'UserModel', id: string, username: string, avatar?: string | null } }> };
-
-export type FindNotificationsByUserQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type FindNotificationsByUserQuery = { __typename?: 'Query', findNotificationsByUser: Array<{ __typename?: 'NotificationModel', id: string, message: string, type: NotificationType }> };
-
-export type FindNotificationsUnreadCountQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type FindNotificationsUnreadCountQuery = { __typename?: 'Query', findNotificationsUnreadCount: number };
-
-export type FindProfileQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type FindProfileQuery = { __typename?: 'Query', findProfile: { __typename?: 'UserModel', username: string, displayName: string, email: string, avatar?: string | null, bio?: string | null, isVerified: boolean, isTotpEnabled: boolean } };
-
-export type FindSocialLinksQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type FindSocialLinksQuery = { __typename?: 'Query', findSocialLinks: Array<{ __typename?: 'SocialLinkModel', id: string, title: string, url: string, position: number }> };
-
-export type GenerateTotpSecretQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GenerateTotpSecretQuery = { __typename?: 'Query', generateTotpSecret: { __typename?: 'TotpModel', qrcodeUrl: string, secret: string } };
+export type RemoveSessionMutation = { __typename?: 'Mutation', removeSession: boolean };
 
 export type RemoveSocialLinkMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -755,6 +774,85 @@ export type UpdateSocialLinkMutationVariables = Exact<{
 
 
 export type UpdateSocialLinkMutation = { __typename?: 'Mutation', updateSocialLink: boolean };
+
+export type FindRecommendedChannelsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindRecommendedChannelsQuery = { __typename?: 'Query', findRecommendedChannels: Array<{ __typename?: 'UserModel', username: string, avatar?: string | null, isVerified: boolean, stream: { __typename?: 'StreamModel', isLive: boolean } }> };
+
+export type FindSponsorsByChannelQueryVariables = Exact<{
+  channelId: Scalars['String']['input'];
+}>;
+
+
+export type FindSponsorsByChannelQuery = { __typename?: 'Query', findSponsorsByChannel: Array<{ __typename?: 'SubscriptionModel', user: { __typename?: 'UserModel', id: string, username: string, avatar?: string | null } }> };
+
+export type FindChatMessagesByStreamQueryVariables = Exact<{
+  streamId: Scalars['String']['input'];
+}>;
+
+
+export type FindChatMessagesByStreamQuery = { __typename?: 'Query', findChatMessagesByStream: Array<{ __typename?: 'ChatMessageModel', createdAt: any, text: string, user: { __typename?: 'UserModel', id: string, username: string } }> };
+
+export type FindMyFollowersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindMyFollowersQuery = { __typename?: 'Query', findMyFollowers: Array<{ __typename?: 'FollowModel', createdAt: any, follower: { __typename?: 'UserModel', username: string, avatar?: string | null, isVerified: boolean } }> };
+
+export type FindMyFollowingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindMyFollowingsQuery = { __typename?: 'Query', findMyFollowings: Array<{ __typename?: 'FollowModel', createdAt: any, followingId: string }> };
+
+export type FindMySponsorshipPlansQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindMySponsorshipPlansQuery = { __typename?: 'Query', findMySponsorshipPlans: Array<{ __typename?: 'PlanModel', id: string, createdAt: any, title: string, price: number }> };
+
+export type FindMySponsorsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindMySponsorsQuery = { __typename?: 'Query', findMySponsors: Array<{ __typename?: 'SubscriptionModel', expiresAt: any, user: { __typename?: 'UserModel', username: string, avatar?: string | null, isVerified: boolean }, plan: { __typename?: 'PlanModel', title: string } }> };
+
+export type FindMyTransactionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindMyTransactionsQuery = { __typename?: 'Query', findMyTransactions: Array<{ __typename?: 'TransactionModel', createdAt: any, status: TransactionStatus, amount: number }> };
+
+export type FindCurrentSessionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindCurrentSessionQuery = { __typename?: 'Query', findCurrentSession: { __typename?: 'SessionModel', id: string, createdAt: string, metadata: { __typename?: 'SessionMetadataModel', ip: string, location: { __typename?: 'LocationModel', country: string, city: string, latidute: string, longitude: string }, device: { __typename?: 'DeviceModel', browser: string, os: string } } } };
+
+export type FindNotificationsByUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindNotificationsByUserQuery = { __typename?: 'Query', findNotificationsByUser: Array<{ __typename?: 'NotificationModel', id: string, message: string, type: NotificationType }> };
+
+export type FindNotificationsUnreadCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindNotificationsUnreadCountQuery = { __typename?: 'Query', findNotificationsUnreadCount: number };
+
+export type FindProfileQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindProfileQuery = { __typename?: 'Query', findProfile: { __typename?: 'UserModel', id: string, username: string, displayName: string, email: string, avatar?: string | null, bio?: string | null, isVerified: boolean, isTotpEnabled: boolean, notificationSettings: { __typename?: 'NotificationSettingsModel', siteNotifications: boolean, telegramNotifications: boolean }, stream: { __typename?: 'StreamModel', serverUrl?: string | null, streamKey?: string | null, isChatEnabled: boolean, isChatFollowersOnly: boolean, isChatPremiumFollowersOnly: boolean } } };
+
+export type FindSessionsByUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindSessionsByUserQuery = { __typename?: 'Query', findSessionsByUser: Array<{ __typename?: 'SessionModel', id: string, createdAt: string, metadata: { __typename?: 'SessionMetadataModel', ip: string, location: { __typename?: 'LocationModel', country: string, city: string, latidute: string, longitude: string }, device: { __typename?: 'DeviceModel', browser: string, os: string } } }> };
+
+export type FindSocialLinksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindSocialLinksQuery = { __typename?: 'Query', findSocialLinks: Array<{ __typename?: 'SocialLinkModel', id: string, title: string, url: string, position: number }> };
+
+export type GenerateTotpSecretQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GenerateTotpSecretQuery = { __typename?: 'Query', generateTotpSecret: { __typename?: 'TotpModel', qrcodeUrl: string, secret: string } };
 
 
 export const CreateUserDocument = gql`
@@ -988,6 +1086,196 @@ export function useVerifyAccountMutation(baseOptions?: Apollo.MutationHookOption
 export type VerifyAccountMutationHookResult = ReturnType<typeof useVerifyAccountMutation>;
 export type VerifyAccountMutationResult = Apollo.MutationResult<VerifyAccountMutation>;
 export type VerifyAccountMutationOptions = Apollo.BaseMutationOptions<VerifyAccountMutation, VerifyAccountMutationVariables>;
+export const ChangeChatSettingsDocument = gql`
+    mutation ChangeChatSettings($data: ChangeChatSettingsInput!) {
+  changeChatSettings(data: $data)
+}
+    `;
+export type ChangeChatSettingsMutationFn = Apollo.MutationFunction<ChangeChatSettingsMutation, ChangeChatSettingsMutationVariables>;
+
+/**
+ * __useChangeChatSettingsMutation__
+ *
+ * To run a mutation, you first call `useChangeChatSettingsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeChatSettingsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeChatSettingsMutation, { data, loading, error }] = useChangeChatSettingsMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useChangeChatSettingsMutation(baseOptions?: Apollo.MutationHookOptions<ChangeChatSettingsMutation, ChangeChatSettingsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeChatSettingsMutation, ChangeChatSettingsMutationVariables>(ChangeChatSettingsDocument, options);
+      }
+export type ChangeChatSettingsMutationHookResult = ReturnType<typeof useChangeChatSettingsMutation>;
+export type ChangeChatSettingsMutationResult = Apollo.MutationResult<ChangeChatSettingsMutation>;
+export type ChangeChatSettingsMutationOptions = Apollo.BaseMutationOptions<ChangeChatSettingsMutation, ChangeChatSettingsMutationVariables>;
+export const SendChatMessageDocument = gql`
+    mutation SendChatMessage($data: SendMessageInput!) {
+  sendChatMessage(data: $data) {
+    streamId
+  }
+}
+    `;
+export type SendChatMessageMutationFn = Apollo.MutationFunction<SendChatMessageMutation, SendChatMessageMutationVariables>;
+
+/**
+ * __useSendChatMessageMutation__
+ *
+ * To run a mutation, you first call `useSendChatMessageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendChatMessageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendChatMessageMutation, { data, loading, error }] = useSendChatMessageMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useSendChatMessageMutation(baseOptions?: Apollo.MutationHookOptions<SendChatMessageMutation, SendChatMessageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendChatMessageMutation, SendChatMessageMutationVariables>(SendChatMessageDocument, options);
+      }
+export type SendChatMessageMutationHookResult = ReturnType<typeof useSendChatMessageMutation>;
+export type SendChatMessageMutationResult = Apollo.MutationResult<SendChatMessageMutation>;
+export type SendChatMessageMutationOptions = Apollo.BaseMutationOptions<SendChatMessageMutation, SendChatMessageMutationVariables>;
+export const CreateSponsorshipPlanDocument = gql`
+    mutation CreateSponsorshipPlan($data: CreatePlanInput!) {
+  createSponsorshipPlan(data: $data)
+}
+    `;
+export type CreateSponsorshipPlanMutationFn = Apollo.MutationFunction<CreateSponsorshipPlanMutation, CreateSponsorshipPlanMutationVariables>;
+
+/**
+ * __useCreateSponsorshipPlanMutation__
+ *
+ * To run a mutation, you first call `useCreateSponsorshipPlanMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSponsorshipPlanMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createSponsorshipPlanMutation, { data, loading, error }] = useCreateSponsorshipPlanMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateSponsorshipPlanMutation(baseOptions?: Apollo.MutationHookOptions<CreateSponsorshipPlanMutation, CreateSponsorshipPlanMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateSponsorshipPlanMutation, CreateSponsorshipPlanMutationVariables>(CreateSponsorshipPlanDocument, options);
+      }
+export type CreateSponsorshipPlanMutationHookResult = ReturnType<typeof useCreateSponsorshipPlanMutation>;
+export type CreateSponsorshipPlanMutationResult = Apollo.MutationResult<CreateSponsorshipPlanMutation>;
+export type CreateSponsorshipPlanMutationOptions = Apollo.BaseMutationOptions<CreateSponsorshipPlanMutation, CreateSponsorshipPlanMutationVariables>;
+export const RemoveSponsorshipPlanDocument = gql`
+    mutation RemoveSponsorshipPlan($planId: String!) {
+  removeSponsorshipPlan(planId: $planId)
+}
+    `;
+export type RemoveSponsorshipPlanMutationFn = Apollo.MutationFunction<RemoveSponsorshipPlanMutation, RemoveSponsorshipPlanMutationVariables>;
+
+/**
+ * __useRemoveSponsorshipPlanMutation__
+ *
+ * To run a mutation, you first call `useRemoveSponsorshipPlanMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveSponsorshipPlanMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeSponsorshipPlanMutation, { data, loading, error }] = useRemoveSponsorshipPlanMutation({
+ *   variables: {
+ *      planId: // value for 'planId'
+ *   },
+ * });
+ */
+export function useRemoveSponsorshipPlanMutation(baseOptions?: Apollo.MutationHookOptions<RemoveSponsorshipPlanMutation, RemoveSponsorshipPlanMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveSponsorshipPlanMutation, RemoveSponsorshipPlanMutationVariables>(RemoveSponsorshipPlanDocument, options);
+      }
+export type RemoveSponsorshipPlanMutationHookResult = ReturnType<typeof useRemoveSponsorshipPlanMutation>;
+export type RemoveSponsorshipPlanMutationResult = Apollo.MutationResult<RemoveSponsorshipPlanMutation>;
+export type RemoveSponsorshipPlanMutationOptions = Apollo.BaseMutationOptions<RemoveSponsorshipPlanMutation, RemoveSponsorshipPlanMutationVariables>;
+export const MakePaymentDocument = gql`
+    mutation MakePayment($planId: String!) {
+  makePayment(planId: $planId) {
+    url
+  }
+}
+    `;
+export type MakePaymentMutationFn = Apollo.MutationFunction<MakePaymentMutation, MakePaymentMutationVariables>;
+
+/**
+ * __useMakePaymentMutation__
+ *
+ * To run a mutation, you first call `useMakePaymentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMakePaymentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [makePaymentMutation, { data, loading, error }] = useMakePaymentMutation({
+ *   variables: {
+ *      planId: // value for 'planId'
+ *   },
+ * });
+ */
+export function useMakePaymentMutation(baseOptions?: Apollo.MutationHookOptions<MakePaymentMutation, MakePaymentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MakePaymentMutation, MakePaymentMutationVariables>(MakePaymentDocument, options);
+      }
+export type MakePaymentMutationHookResult = ReturnType<typeof useMakePaymentMutation>;
+export type MakePaymentMutationResult = Apollo.MutationResult<MakePaymentMutation>;
+export type MakePaymentMutationOptions = Apollo.BaseMutationOptions<MakePaymentMutation, MakePaymentMutationVariables>;
+export const CreateIngressDocument = gql`
+    mutation CreateIngress($ingressType: Float!) {
+  createIngress(ingressType: $ingressType)
+}
+    `;
+export type CreateIngressMutationFn = Apollo.MutationFunction<CreateIngressMutation, CreateIngressMutationVariables>;
+
+/**
+ * __useCreateIngressMutation__
+ *
+ * To run a mutation, you first call `useCreateIngressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateIngressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createIngressMutation, { data, loading, error }] = useCreateIngressMutation({
+ *   variables: {
+ *      ingressType: // value for 'ingressType'
+ *   },
+ * });
+ */
+export function useCreateIngressMutation(baseOptions?: Apollo.MutationHookOptions<CreateIngressMutation, CreateIngressMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateIngressMutation, CreateIngressMutationVariables>(CreateIngressDocument, options);
+      }
+export type CreateIngressMutationHookResult = ReturnType<typeof useCreateIngressMutation>;
+export type CreateIngressMutationResult = Apollo.MutationResult<CreateIngressMutation>;
+export type CreateIngressMutationOptions = Apollo.BaseMutationOptions<CreateIngressMutation, CreateIngressMutationVariables>;
 export const ChangeEmailDocument = gql`
     mutation ChangeEmail($data: ChangeEmailInput!) {
   changeEmailUser(data: $data)
@@ -1019,6 +1307,43 @@ export function useChangeEmailMutation(baseOptions?: Apollo.MutationHookOptions<
 export type ChangeEmailMutationHookResult = ReturnType<typeof useChangeEmailMutation>;
 export type ChangeEmailMutationResult = Apollo.MutationResult<ChangeEmailMutation>;
 export type ChangeEmailMutationOptions = Apollo.BaseMutationOptions<ChangeEmailMutation, ChangeEmailMutationVariables>;
+export const ChangeNotificationsSettingsDocument = gql`
+    mutation ChangeNotificationsSettings($data: ChangeNotificationsSettingsInput!) {
+  changeNotificationsSettings(data: $data) {
+    notificationSettings {
+      siteNotifications
+      telegramNotifications
+    }
+    telegramAuthToken
+  }
+}
+    `;
+export type ChangeNotificationsSettingsMutationFn = Apollo.MutationFunction<ChangeNotificationsSettingsMutation, ChangeNotificationsSettingsMutationVariables>;
+
+/**
+ * __useChangeNotificationsSettingsMutation__
+ *
+ * To run a mutation, you first call `useChangeNotificationsSettingsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeNotificationsSettingsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeNotificationsSettingsMutation, { data, loading, error }] = useChangeNotificationsSettingsMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useChangeNotificationsSettingsMutation(baseOptions?: Apollo.MutationHookOptions<ChangeNotificationsSettingsMutation, ChangeNotificationsSettingsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeNotificationsSettingsMutation, ChangeNotificationsSettingsMutationVariables>(ChangeNotificationsSettingsDocument, options);
+      }
+export type ChangeNotificationsSettingsMutationHookResult = ReturnType<typeof useChangeNotificationsSettingsMutation>;
+export type ChangeNotificationsSettingsMutationResult = Apollo.MutationResult<ChangeNotificationsSettingsMutation>;
+export type ChangeNotificationsSettingsMutationOptions = Apollo.BaseMutationOptions<ChangeNotificationsSettingsMutation, ChangeNotificationsSettingsMutationVariables>;
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($data: ChangePasswordInput!) {
   changePasswordUser(data: $data)
@@ -1264,299 +1589,37 @@ export function useRemoveProfileAvatarMutation(baseOptions?: Apollo.MutationHook
 export type RemoveProfileAvatarMutationHookResult = ReturnType<typeof useRemoveProfileAvatarMutation>;
 export type RemoveProfileAvatarMutationResult = Apollo.MutationResult<RemoveProfileAvatarMutation>;
 export type RemoveProfileAvatarMutationOptions = Apollo.BaseMutationOptions<RemoveProfileAvatarMutation, RemoveProfileAvatarMutationVariables>;
-export const FindRecommendedChannelsDocument = gql`
-    query FindRecommendedChannels {
-  findRecommendedChannels {
-    username
-    avatar
-    isVerified
-    stream {
-      isLive
-    }
-  }
+export const RemoveSessionDocument = gql`
+    mutation RemoveSession($id: String!) {
+  removeSession(id: $id)
 }
     `;
+export type RemoveSessionMutationFn = Apollo.MutationFunction<RemoveSessionMutation, RemoveSessionMutationVariables>;
 
 /**
- * __useFindRecommendedChannelsQuery__
+ * __useRemoveSessionMutation__
  *
- * To run a query within a React component, call `useFindRecommendedChannelsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindRecommendedChannelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
+ * To run a mutation, you first call `useRemoveSessionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveSessionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const { data, loading, error } = useFindRecommendedChannelsQuery({
+ * const [removeSessionMutation, { data, loading, error }] = useRemoveSessionMutation({
  *   variables: {
+ *      id: // value for 'id'
  *   },
  * });
  */
-export function useFindRecommendedChannelsQuery(baseOptions?: Apollo.QueryHookOptions<FindRecommendedChannelsQuery, FindRecommendedChannelsQueryVariables>) {
+export function useRemoveSessionMutation(baseOptions?: Apollo.MutationHookOptions<RemoveSessionMutation, RemoveSessionMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FindRecommendedChannelsQuery, FindRecommendedChannelsQueryVariables>(FindRecommendedChannelsDocument, options);
+        return Apollo.useMutation<RemoveSessionMutation, RemoveSessionMutationVariables>(RemoveSessionDocument, options);
       }
-export function useFindRecommendedChannelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindRecommendedChannelsQuery, FindRecommendedChannelsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FindRecommendedChannelsQuery, FindRecommendedChannelsQueryVariables>(FindRecommendedChannelsDocument, options);
-        }
-export function useFindRecommendedChannelsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindRecommendedChannelsQuery, FindRecommendedChannelsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<FindRecommendedChannelsQuery, FindRecommendedChannelsQueryVariables>(FindRecommendedChannelsDocument, options);
-        }
-export type FindRecommendedChannelsQueryHookResult = ReturnType<typeof useFindRecommendedChannelsQuery>;
-export type FindRecommendedChannelsLazyQueryHookResult = ReturnType<typeof useFindRecommendedChannelsLazyQuery>;
-export type FindRecommendedChannelsSuspenseQueryHookResult = ReturnType<typeof useFindRecommendedChannelsSuspenseQuery>;
-export type FindRecommendedChannelsQueryResult = Apollo.QueryResult<FindRecommendedChannelsQuery, FindRecommendedChannelsQueryVariables>;
-export const FindSponsorsByChannelDocument = gql`
-    query FindSponsorsByChannel($channelId: String!) {
-  findSponsorsByChannel(channelId: $channelId) {
-    user {
-      id
-      username
-      avatar
-    }
-  }
-}
-    `;
-
-/**
- * __useFindSponsorsByChannelQuery__
- *
- * To run a query within a React component, call `useFindSponsorsByChannelQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindSponsorsByChannelQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindSponsorsByChannelQuery({
- *   variables: {
- *      channelId: // value for 'channelId'
- *   },
- * });
- */
-export function useFindSponsorsByChannelQuery(baseOptions: Apollo.QueryHookOptions<FindSponsorsByChannelQuery, FindSponsorsByChannelQueryVariables> & ({ variables: FindSponsorsByChannelQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FindSponsorsByChannelQuery, FindSponsorsByChannelQueryVariables>(FindSponsorsByChannelDocument, options);
-      }
-export function useFindSponsorsByChannelLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindSponsorsByChannelQuery, FindSponsorsByChannelQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FindSponsorsByChannelQuery, FindSponsorsByChannelQueryVariables>(FindSponsorsByChannelDocument, options);
-        }
-export function useFindSponsorsByChannelSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindSponsorsByChannelQuery, FindSponsorsByChannelQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<FindSponsorsByChannelQuery, FindSponsorsByChannelQueryVariables>(FindSponsorsByChannelDocument, options);
-        }
-export type FindSponsorsByChannelQueryHookResult = ReturnType<typeof useFindSponsorsByChannelQuery>;
-export type FindSponsorsByChannelLazyQueryHookResult = ReturnType<typeof useFindSponsorsByChannelLazyQuery>;
-export type FindSponsorsByChannelSuspenseQueryHookResult = ReturnType<typeof useFindSponsorsByChannelSuspenseQuery>;
-export type FindSponsorsByChannelQueryResult = Apollo.QueryResult<FindSponsorsByChannelQuery, FindSponsorsByChannelQueryVariables>;
-export const FindNotificationsByUserDocument = gql`
-    query findNotificationsByUser {
-  findNotificationsByUser {
-    id
-    message
-    type
-  }
-}
-    `;
-
-/**
- * __useFindNotificationsByUserQuery__
- *
- * To run a query within a React component, call `useFindNotificationsByUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindNotificationsByUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindNotificationsByUserQuery({
- *   variables: {
- *   },
- * });
- */
-export function useFindNotificationsByUserQuery(baseOptions?: Apollo.QueryHookOptions<FindNotificationsByUserQuery, FindNotificationsByUserQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FindNotificationsByUserQuery, FindNotificationsByUserQueryVariables>(FindNotificationsByUserDocument, options);
-      }
-export function useFindNotificationsByUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindNotificationsByUserQuery, FindNotificationsByUserQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FindNotificationsByUserQuery, FindNotificationsByUserQueryVariables>(FindNotificationsByUserDocument, options);
-        }
-export function useFindNotificationsByUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindNotificationsByUserQuery, FindNotificationsByUserQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<FindNotificationsByUserQuery, FindNotificationsByUserQueryVariables>(FindNotificationsByUserDocument, options);
-        }
-export type FindNotificationsByUserQueryHookResult = ReturnType<typeof useFindNotificationsByUserQuery>;
-export type FindNotificationsByUserLazyQueryHookResult = ReturnType<typeof useFindNotificationsByUserLazyQuery>;
-export type FindNotificationsByUserSuspenseQueryHookResult = ReturnType<typeof useFindNotificationsByUserSuspenseQuery>;
-export type FindNotificationsByUserQueryResult = Apollo.QueryResult<FindNotificationsByUserQuery, FindNotificationsByUserQueryVariables>;
-export const FindNotificationsUnreadCountDocument = gql`
-    query FindNotificationsUnreadCount {
-  findNotificationsUnreadCount
-}
-    `;
-
-/**
- * __useFindNotificationsUnreadCountQuery__
- *
- * To run a query within a React component, call `useFindNotificationsUnreadCountQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindNotificationsUnreadCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindNotificationsUnreadCountQuery({
- *   variables: {
- *   },
- * });
- */
-export function useFindNotificationsUnreadCountQuery(baseOptions?: Apollo.QueryHookOptions<FindNotificationsUnreadCountQuery, FindNotificationsUnreadCountQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FindNotificationsUnreadCountQuery, FindNotificationsUnreadCountQueryVariables>(FindNotificationsUnreadCountDocument, options);
-      }
-export function useFindNotificationsUnreadCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindNotificationsUnreadCountQuery, FindNotificationsUnreadCountQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FindNotificationsUnreadCountQuery, FindNotificationsUnreadCountQueryVariables>(FindNotificationsUnreadCountDocument, options);
-        }
-export function useFindNotificationsUnreadCountSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindNotificationsUnreadCountQuery, FindNotificationsUnreadCountQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<FindNotificationsUnreadCountQuery, FindNotificationsUnreadCountQueryVariables>(FindNotificationsUnreadCountDocument, options);
-        }
-export type FindNotificationsUnreadCountQueryHookResult = ReturnType<typeof useFindNotificationsUnreadCountQuery>;
-export type FindNotificationsUnreadCountLazyQueryHookResult = ReturnType<typeof useFindNotificationsUnreadCountLazyQuery>;
-export type FindNotificationsUnreadCountSuspenseQueryHookResult = ReturnType<typeof useFindNotificationsUnreadCountSuspenseQuery>;
-export type FindNotificationsUnreadCountQueryResult = Apollo.QueryResult<FindNotificationsUnreadCountQuery, FindNotificationsUnreadCountQueryVariables>;
-export const FindProfileDocument = gql`
-    query FindProfile {
-  findProfile {
-    username
-    displayName
-    email
-    avatar
-    bio
-    isVerified
-    isTotpEnabled
-  }
-}
-    `;
-
-/**
- * __useFindProfileQuery__
- *
- * To run a query within a React component, call `useFindProfileQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindProfileQuery({
- *   variables: {
- *   },
- * });
- */
-export function useFindProfileQuery(baseOptions?: Apollo.QueryHookOptions<FindProfileQuery, FindProfileQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FindProfileQuery, FindProfileQueryVariables>(FindProfileDocument, options);
-      }
-export function useFindProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindProfileQuery, FindProfileQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FindProfileQuery, FindProfileQueryVariables>(FindProfileDocument, options);
-        }
-export function useFindProfileSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindProfileQuery, FindProfileQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<FindProfileQuery, FindProfileQueryVariables>(FindProfileDocument, options);
-        }
-export type FindProfileQueryHookResult = ReturnType<typeof useFindProfileQuery>;
-export type FindProfileLazyQueryHookResult = ReturnType<typeof useFindProfileLazyQuery>;
-export type FindProfileSuspenseQueryHookResult = ReturnType<typeof useFindProfileSuspenseQuery>;
-export type FindProfileQueryResult = Apollo.QueryResult<FindProfileQuery, FindProfileQueryVariables>;
-export const FindSocialLinksDocument = gql`
-    query FindSocialLinks {
-  findSocialLinks {
-    id
-    title
-    url
-    position
-  }
-}
-    `;
-
-/**
- * __useFindSocialLinksQuery__
- *
- * To run a query within a React component, call `useFindSocialLinksQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindSocialLinksQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindSocialLinksQuery({
- *   variables: {
- *   },
- * });
- */
-export function useFindSocialLinksQuery(baseOptions?: Apollo.QueryHookOptions<FindSocialLinksQuery, FindSocialLinksQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FindSocialLinksQuery, FindSocialLinksQueryVariables>(FindSocialLinksDocument, options);
-      }
-export function useFindSocialLinksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindSocialLinksQuery, FindSocialLinksQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FindSocialLinksQuery, FindSocialLinksQueryVariables>(FindSocialLinksDocument, options);
-        }
-export function useFindSocialLinksSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindSocialLinksQuery, FindSocialLinksQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<FindSocialLinksQuery, FindSocialLinksQueryVariables>(FindSocialLinksDocument, options);
-        }
-export type FindSocialLinksQueryHookResult = ReturnType<typeof useFindSocialLinksQuery>;
-export type FindSocialLinksLazyQueryHookResult = ReturnType<typeof useFindSocialLinksLazyQuery>;
-export type FindSocialLinksSuspenseQueryHookResult = ReturnType<typeof useFindSocialLinksSuspenseQuery>;
-export type FindSocialLinksQueryResult = Apollo.QueryResult<FindSocialLinksQuery, FindSocialLinksQueryVariables>;
-export const GenerateTotpSecretDocument = gql`
-    query GenerateTotpSecret {
-  generateTotpSecret {
-    qrcodeUrl
-    secret
-  }
-}
-    `;
-
-/**
- * __useGenerateTotpSecretQuery__
- *
- * To run a query within a React component, call `useGenerateTotpSecretQuery` and pass it any options that fit your needs.
- * When your component renders, `useGenerateTotpSecretQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGenerateTotpSecretQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGenerateTotpSecretQuery(baseOptions?: Apollo.QueryHookOptions<GenerateTotpSecretQuery, GenerateTotpSecretQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GenerateTotpSecretQuery, GenerateTotpSecretQueryVariables>(GenerateTotpSecretDocument, options);
-      }
-export function useGenerateTotpSecretLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GenerateTotpSecretQuery, GenerateTotpSecretQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GenerateTotpSecretQuery, GenerateTotpSecretQueryVariables>(GenerateTotpSecretDocument, options);
-        }
-export function useGenerateTotpSecretSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GenerateTotpSecretQuery, GenerateTotpSecretQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GenerateTotpSecretQuery, GenerateTotpSecretQueryVariables>(GenerateTotpSecretDocument, options);
-        }
-export type GenerateTotpSecretQueryHookResult = ReturnType<typeof useGenerateTotpSecretQuery>;
-export type GenerateTotpSecretLazyQueryHookResult = ReturnType<typeof useGenerateTotpSecretLazyQuery>;
-export type GenerateTotpSecretSuspenseQueryHookResult = ReturnType<typeof useGenerateTotpSecretSuspenseQuery>;
-export type GenerateTotpSecretQueryResult = Apollo.QueryResult<GenerateTotpSecretQuery, GenerateTotpSecretQueryVariables>;
+export type RemoveSessionMutationHookResult = ReturnType<typeof useRemoveSessionMutation>;
+export type RemoveSessionMutationResult = Apollo.MutationResult<RemoveSessionMutation>;
+export type RemoveSessionMutationOptions = Apollo.BaseMutationOptions<RemoveSessionMutation, RemoveSessionMutationVariables>;
 export const RemoveSocialLinkDocument = gql`
     mutation RemoveSocialLink($id: String!) {
   removeSocialLink(id: $id)
@@ -1651,3 +1714,673 @@ export function useUpdateSocialLinkMutation(baseOptions?: Apollo.MutationHookOpt
 export type UpdateSocialLinkMutationHookResult = ReturnType<typeof useUpdateSocialLinkMutation>;
 export type UpdateSocialLinkMutationResult = Apollo.MutationResult<UpdateSocialLinkMutation>;
 export type UpdateSocialLinkMutationOptions = Apollo.BaseMutationOptions<UpdateSocialLinkMutation, UpdateSocialLinkMutationVariables>;
+export const FindRecommendedChannelsDocument = gql`
+    query FindRecommendedChannels {
+  findRecommendedChannels {
+    username
+    avatar
+    isVerified
+    stream {
+      isLive
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindRecommendedChannelsQuery__
+ *
+ * To run a query within a React component, call `useFindRecommendedChannelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindRecommendedChannelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindRecommendedChannelsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindRecommendedChannelsQuery(baseOptions?: Apollo.QueryHookOptions<FindRecommendedChannelsQuery, FindRecommendedChannelsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindRecommendedChannelsQuery, FindRecommendedChannelsQueryVariables>(FindRecommendedChannelsDocument, options);
+      }
+export function useFindRecommendedChannelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindRecommendedChannelsQuery, FindRecommendedChannelsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindRecommendedChannelsQuery, FindRecommendedChannelsQueryVariables>(FindRecommendedChannelsDocument, options);
+        }
+export function useFindRecommendedChannelsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindRecommendedChannelsQuery, FindRecommendedChannelsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindRecommendedChannelsQuery, FindRecommendedChannelsQueryVariables>(FindRecommendedChannelsDocument, options);
+        }
+export type FindRecommendedChannelsQueryHookResult = ReturnType<typeof useFindRecommendedChannelsQuery>;
+export type FindRecommendedChannelsLazyQueryHookResult = ReturnType<typeof useFindRecommendedChannelsLazyQuery>;
+export type FindRecommendedChannelsSuspenseQueryHookResult = ReturnType<typeof useFindRecommendedChannelsSuspenseQuery>;
+export type FindRecommendedChannelsQueryResult = Apollo.QueryResult<FindRecommendedChannelsQuery, FindRecommendedChannelsQueryVariables>;
+export const FindSponsorsByChannelDocument = gql`
+    query FindSponsorsByChannel($channelId: String!) {
+  findSponsorsByChannel(channelId: $channelId) {
+    user {
+      id
+      username
+      avatar
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindSponsorsByChannelQuery__
+ *
+ * To run a query within a React component, call `useFindSponsorsByChannelQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindSponsorsByChannelQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindSponsorsByChannelQuery({
+ *   variables: {
+ *      channelId: // value for 'channelId'
+ *   },
+ * });
+ */
+export function useFindSponsorsByChannelQuery(baseOptions: Apollo.QueryHookOptions<FindSponsorsByChannelQuery, FindSponsorsByChannelQueryVariables> & ({ variables: FindSponsorsByChannelQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindSponsorsByChannelQuery, FindSponsorsByChannelQueryVariables>(FindSponsorsByChannelDocument, options);
+      }
+export function useFindSponsorsByChannelLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindSponsorsByChannelQuery, FindSponsorsByChannelQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindSponsorsByChannelQuery, FindSponsorsByChannelQueryVariables>(FindSponsorsByChannelDocument, options);
+        }
+export function useFindSponsorsByChannelSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindSponsorsByChannelQuery, FindSponsorsByChannelQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindSponsorsByChannelQuery, FindSponsorsByChannelQueryVariables>(FindSponsorsByChannelDocument, options);
+        }
+export type FindSponsorsByChannelQueryHookResult = ReturnType<typeof useFindSponsorsByChannelQuery>;
+export type FindSponsorsByChannelLazyQueryHookResult = ReturnType<typeof useFindSponsorsByChannelLazyQuery>;
+export type FindSponsorsByChannelSuspenseQueryHookResult = ReturnType<typeof useFindSponsorsByChannelSuspenseQuery>;
+export type FindSponsorsByChannelQueryResult = Apollo.QueryResult<FindSponsorsByChannelQuery, FindSponsorsByChannelQueryVariables>;
+export const FindChatMessagesByStreamDocument = gql`
+    query FindChatMessagesByStream($streamId: String!) {
+  findChatMessagesByStream(streamId: $streamId) {
+    createdAt
+    text
+    user {
+      id
+      username
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindChatMessagesByStreamQuery__
+ *
+ * To run a query within a React component, call `useFindChatMessagesByStreamQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindChatMessagesByStreamQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindChatMessagesByStreamQuery({
+ *   variables: {
+ *      streamId: // value for 'streamId'
+ *   },
+ * });
+ */
+export function useFindChatMessagesByStreamQuery(baseOptions: Apollo.QueryHookOptions<FindChatMessagesByStreamQuery, FindChatMessagesByStreamQueryVariables> & ({ variables: FindChatMessagesByStreamQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindChatMessagesByStreamQuery, FindChatMessagesByStreamQueryVariables>(FindChatMessagesByStreamDocument, options);
+      }
+export function useFindChatMessagesByStreamLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindChatMessagesByStreamQuery, FindChatMessagesByStreamQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindChatMessagesByStreamQuery, FindChatMessagesByStreamQueryVariables>(FindChatMessagesByStreamDocument, options);
+        }
+export function useFindChatMessagesByStreamSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindChatMessagesByStreamQuery, FindChatMessagesByStreamQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindChatMessagesByStreamQuery, FindChatMessagesByStreamQueryVariables>(FindChatMessagesByStreamDocument, options);
+        }
+export type FindChatMessagesByStreamQueryHookResult = ReturnType<typeof useFindChatMessagesByStreamQuery>;
+export type FindChatMessagesByStreamLazyQueryHookResult = ReturnType<typeof useFindChatMessagesByStreamLazyQuery>;
+export type FindChatMessagesByStreamSuspenseQueryHookResult = ReturnType<typeof useFindChatMessagesByStreamSuspenseQuery>;
+export type FindChatMessagesByStreamQueryResult = Apollo.QueryResult<FindChatMessagesByStreamQuery, FindChatMessagesByStreamQueryVariables>;
+export const FindMyFollowersDocument = gql`
+    query FindMyFollowers {
+  findMyFollowers {
+    createdAt
+    follower {
+      username
+      avatar
+      isVerified
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindMyFollowersQuery__
+ *
+ * To run a query within a React component, call `useFindMyFollowersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindMyFollowersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindMyFollowersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindMyFollowersQuery(baseOptions?: Apollo.QueryHookOptions<FindMyFollowersQuery, FindMyFollowersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindMyFollowersQuery, FindMyFollowersQueryVariables>(FindMyFollowersDocument, options);
+      }
+export function useFindMyFollowersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindMyFollowersQuery, FindMyFollowersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindMyFollowersQuery, FindMyFollowersQueryVariables>(FindMyFollowersDocument, options);
+        }
+export function useFindMyFollowersSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindMyFollowersQuery, FindMyFollowersQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindMyFollowersQuery, FindMyFollowersQueryVariables>(FindMyFollowersDocument, options);
+        }
+export type FindMyFollowersQueryHookResult = ReturnType<typeof useFindMyFollowersQuery>;
+export type FindMyFollowersLazyQueryHookResult = ReturnType<typeof useFindMyFollowersLazyQuery>;
+export type FindMyFollowersSuspenseQueryHookResult = ReturnType<typeof useFindMyFollowersSuspenseQuery>;
+export type FindMyFollowersQueryResult = Apollo.QueryResult<FindMyFollowersQuery, FindMyFollowersQueryVariables>;
+export const FindMyFollowingsDocument = gql`
+    query FindMyFollowings {
+  findMyFollowings {
+    createdAt
+    followingId
+  }
+}
+    `;
+
+/**
+ * __useFindMyFollowingsQuery__
+ *
+ * To run a query within a React component, call `useFindMyFollowingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindMyFollowingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindMyFollowingsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindMyFollowingsQuery(baseOptions?: Apollo.QueryHookOptions<FindMyFollowingsQuery, FindMyFollowingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindMyFollowingsQuery, FindMyFollowingsQueryVariables>(FindMyFollowingsDocument, options);
+      }
+export function useFindMyFollowingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindMyFollowingsQuery, FindMyFollowingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindMyFollowingsQuery, FindMyFollowingsQueryVariables>(FindMyFollowingsDocument, options);
+        }
+export function useFindMyFollowingsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindMyFollowingsQuery, FindMyFollowingsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindMyFollowingsQuery, FindMyFollowingsQueryVariables>(FindMyFollowingsDocument, options);
+        }
+export type FindMyFollowingsQueryHookResult = ReturnType<typeof useFindMyFollowingsQuery>;
+export type FindMyFollowingsLazyQueryHookResult = ReturnType<typeof useFindMyFollowingsLazyQuery>;
+export type FindMyFollowingsSuspenseQueryHookResult = ReturnType<typeof useFindMyFollowingsSuspenseQuery>;
+export type FindMyFollowingsQueryResult = Apollo.QueryResult<FindMyFollowingsQuery, FindMyFollowingsQueryVariables>;
+export const FindMySponsorshipPlansDocument = gql`
+    query FindMySponsorshipPlans {
+  findMySponsorshipPlans {
+    id
+    createdAt
+    title
+    price
+  }
+}
+    `;
+
+/**
+ * __useFindMySponsorshipPlansQuery__
+ *
+ * To run a query within a React component, call `useFindMySponsorshipPlansQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindMySponsorshipPlansQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindMySponsorshipPlansQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindMySponsorshipPlansQuery(baseOptions?: Apollo.QueryHookOptions<FindMySponsorshipPlansQuery, FindMySponsorshipPlansQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindMySponsorshipPlansQuery, FindMySponsorshipPlansQueryVariables>(FindMySponsorshipPlansDocument, options);
+      }
+export function useFindMySponsorshipPlansLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindMySponsorshipPlansQuery, FindMySponsorshipPlansQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindMySponsorshipPlansQuery, FindMySponsorshipPlansQueryVariables>(FindMySponsorshipPlansDocument, options);
+        }
+export function useFindMySponsorshipPlansSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindMySponsorshipPlansQuery, FindMySponsorshipPlansQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindMySponsorshipPlansQuery, FindMySponsorshipPlansQueryVariables>(FindMySponsorshipPlansDocument, options);
+        }
+export type FindMySponsorshipPlansQueryHookResult = ReturnType<typeof useFindMySponsorshipPlansQuery>;
+export type FindMySponsorshipPlansLazyQueryHookResult = ReturnType<typeof useFindMySponsorshipPlansLazyQuery>;
+export type FindMySponsorshipPlansSuspenseQueryHookResult = ReturnType<typeof useFindMySponsorshipPlansSuspenseQuery>;
+export type FindMySponsorshipPlansQueryResult = Apollo.QueryResult<FindMySponsorshipPlansQuery, FindMySponsorshipPlansQueryVariables>;
+export const FindMySponsorsDocument = gql`
+    query FindMySponsors {
+  findMySponsors {
+    expiresAt
+    user {
+      username
+      avatar
+      isVerified
+    }
+    plan {
+      title
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindMySponsorsQuery__
+ *
+ * To run a query within a React component, call `useFindMySponsorsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindMySponsorsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindMySponsorsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindMySponsorsQuery(baseOptions?: Apollo.QueryHookOptions<FindMySponsorsQuery, FindMySponsorsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindMySponsorsQuery, FindMySponsorsQueryVariables>(FindMySponsorsDocument, options);
+      }
+export function useFindMySponsorsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindMySponsorsQuery, FindMySponsorsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindMySponsorsQuery, FindMySponsorsQueryVariables>(FindMySponsorsDocument, options);
+        }
+export function useFindMySponsorsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindMySponsorsQuery, FindMySponsorsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindMySponsorsQuery, FindMySponsorsQueryVariables>(FindMySponsorsDocument, options);
+        }
+export type FindMySponsorsQueryHookResult = ReturnType<typeof useFindMySponsorsQuery>;
+export type FindMySponsorsLazyQueryHookResult = ReturnType<typeof useFindMySponsorsLazyQuery>;
+export type FindMySponsorsSuspenseQueryHookResult = ReturnType<typeof useFindMySponsorsSuspenseQuery>;
+export type FindMySponsorsQueryResult = Apollo.QueryResult<FindMySponsorsQuery, FindMySponsorsQueryVariables>;
+export const FindMyTransactionsDocument = gql`
+    query FindMyTransactions {
+  findMyTransactions {
+    createdAt
+    status
+    amount
+  }
+}
+    `;
+
+/**
+ * __useFindMyTransactionsQuery__
+ *
+ * To run a query within a React component, call `useFindMyTransactionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindMyTransactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindMyTransactionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindMyTransactionsQuery(baseOptions?: Apollo.QueryHookOptions<FindMyTransactionsQuery, FindMyTransactionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindMyTransactionsQuery, FindMyTransactionsQueryVariables>(FindMyTransactionsDocument, options);
+      }
+export function useFindMyTransactionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindMyTransactionsQuery, FindMyTransactionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindMyTransactionsQuery, FindMyTransactionsQueryVariables>(FindMyTransactionsDocument, options);
+        }
+export function useFindMyTransactionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindMyTransactionsQuery, FindMyTransactionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindMyTransactionsQuery, FindMyTransactionsQueryVariables>(FindMyTransactionsDocument, options);
+        }
+export type FindMyTransactionsQueryHookResult = ReturnType<typeof useFindMyTransactionsQuery>;
+export type FindMyTransactionsLazyQueryHookResult = ReturnType<typeof useFindMyTransactionsLazyQuery>;
+export type FindMyTransactionsSuspenseQueryHookResult = ReturnType<typeof useFindMyTransactionsSuspenseQuery>;
+export type FindMyTransactionsQueryResult = Apollo.QueryResult<FindMyTransactionsQuery, FindMyTransactionsQueryVariables>;
+export const FindCurrentSessionDocument = gql`
+    query FindCurrentSession {
+  findCurrentSession {
+    id
+    createdAt
+    metadata {
+      location {
+        country
+        city
+        latidute
+        longitude
+      }
+      device {
+        browser
+        os
+      }
+      ip
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindCurrentSessionQuery__
+ *
+ * To run a query within a React component, call `useFindCurrentSessionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindCurrentSessionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindCurrentSessionQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindCurrentSessionQuery(baseOptions?: Apollo.QueryHookOptions<FindCurrentSessionQuery, FindCurrentSessionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindCurrentSessionQuery, FindCurrentSessionQueryVariables>(FindCurrentSessionDocument, options);
+      }
+export function useFindCurrentSessionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindCurrentSessionQuery, FindCurrentSessionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindCurrentSessionQuery, FindCurrentSessionQueryVariables>(FindCurrentSessionDocument, options);
+        }
+export function useFindCurrentSessionSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindCurrentSessionQuery, FindCurrentSessionQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindCurrentSessionQuery, FindCurrentSessionQueryVariables>(FindCurrentSessionDocument, options);
+        }
+export type FindCurrentSessionQueryHookResult = ReturnType<typeof useFindCurrentSessionQuery>;
+export type FindCurrentSessionLazyQueryHookResult = ReturnType<typeof useFindCurrentSessionLazyQuery>;
+export type FindCurrentSessionSuspenseQueryHookResult = ReturnType<typeof useFindCurrentSessionSuspenseQuery>;
+export type FindCurrentSessionQueryResult = Apollo.QueryResult<FindCurrentSessionQuery, FindCurrentSessionQueryVariables>;
+export const FindNotificationsByUserDocument = gql`
+    query findNotificationsByUser {
+  findNotificationsByUser {
+    id
+    message
+    type
+  }
+}
+    `;
+
+/**
+ * __useFindNotificationsByUserQuery__
+ *
+ * To run a query within a React component, call `useFindNotificationsByUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindNotificationsByUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindNotificationsByUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindNotificationsByUserQuery(baseOptions?: Apollo.QueryHookOptions<FindNotificationsByUserQuery, FindNotificationsByUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindNotificationsByUserQuery, FindNotificationsByUserQueryVariables>(FindNotificationsByUserDocument, options);
+      }
+export function useFindNotificationsByUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindNotificationsByUserQuery, FindNotificationsByUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindNotificationsByUserQuery, FindNotificationsByUserQueryVariables>(FindNotificationsByUserDocument, options);
+        }
+export function useFindNotificationsByUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindNotificationsByUserQuery, FindNotificationsByUserQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindNotificationsByUserQuery, FindNotificationsByUserQueryVariables>(FindNotificationsByUserDocument, options);
+        }
+export type FindNotificationsByUserQueryHookResult = ReturnType<typeof useFindNotificationsByUserQuery>;
+export type FindNotificationsByUserLazyQueryHookResult = ReturnType<typeof useFindNotificationsByUserLazyQuery>;
+export type FindNotificationsByUserSuspenseQueryHookResult = ReturnType<typeof useFindNotificationsByUserSuspenseQuery>;
+export type FindNotificationsByUserQueryResult = Apollo.QueryResult<FindNotificationsByUserQuery, FindNotificationsByUserQueryVariables>;
+export const FindNotificationsUnreadCountDocument = gql`
+    query FindNotificationsUnreadCount {
+  findNotificationsUnreadCount
+}
+    `;
+
+/**
+ * __useFindNotificationsUnreadCountQuery__
+ *
+ * To run a query within a React component, call `useFindNotificationsUnreadCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindNotificationsUnreadCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindNotificationsUnreadCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindNotificationsUnreadCountQuery(baseOptions?: Apollo.QueryHookOptions<FindNotificationsUnreadCountQuery, FindNotificationsUnreadCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindNotificationsUnreadCountQuery, FindNotificationsUnreadCountQueryVariables>(FindNotificationsUnreadCountDocument, options);
+      }
+export function useFindNotificationsUnreadCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindNotificationsUnreadCountQuery, FindNotificationsUnreadCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindNotificationsUnreadCountQuery, FindNotificationsUnreadCountQueryVariables>(FindNotificationsUnreadCountDocument, options);
+        }
+export function useFindNotificationsUnreadCountSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindNotificationsUnreadCountQuery, FindNotificationsUnreadCountQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindNotificationsUnreadCountQuery, FindNotificationsUnreadCountQueryVariables>(FindNotificationsUnreadCountDocument, options);
+        }
+export type FindNotificationsUnreadCountQueryHookResult = ReturnType<typeof useFindNotificationsUnreadCountQuery>;
+export type FindNotificationsUnreadCountLazyQueryHookResult = ReturnType<typeof useFindNotificationsUnreadCountLazyQuery>;
+export type FindNotificationsUnreadCountSuspenseQueryHookResult = ReturnType<typeof useFindNotificationsUnreadCountSuspenseQuery>;
+export type FindNotificationsUnreadCountQueryResult = Apollo.QueryResult<FindNotificationsUnreadCountQuery, FindNotificationsUnreadCountQueryVariables>;
+export const FindProfileDocument = gql`
+    query FindProfile {
+  findProfile {
+    id
+    username
+    displayName
+    email
+    avatar
+    bio
+    isVerified
+    isTotpEnabled
+    notificationSettings {
+      siteNotifications
+      telegramNotifications
+    }
+    stream {
+      serverUrl
+      streamKey
+      isChatEnabled
+      isChatFollowersOnly
+      isChatPremiumFollowersOnly
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindProfileQuery__
+ *
+ * To run a query within a React component, call `useFindProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindProfileQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindProfileQuery(baseOptions?: Apollo.QueryHookOptions<FindProfileQuery, FindProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindProfileQuery, FindProfileQueryVariables>(FindProfileDocument, options);
+      }
+export function useFindProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindProfileQuery, FindProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindProfileQuery, FindProfileQueryVariables>(FindProfileDocument, options);
+        }
+export function useFindProfileSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindProfileQuery, FindProfileQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindProfileQuery, FindProfileQueryVariables>(FindProfileDocument, options);
+        }
+export type FindProfileQueryHookResult = ReturnType<typeof useFindProfileQuery>;
+export type FindProfileLazyQueryHookResult = ReturnType<typeof useFindProfileLazyQuery>;
+export type FindProfileSuspenseQueryHookResult = ReturnType<typeof useFindProfileSuspenseQuery>;
+export type FindProfileQueryResult = Apollo.QueryResult<FindProfileQuery, FindProfileQueryVariables>;
+export const FindSessionsByUserDocument = gql`
+    query FindSessionsByUser {
+  findSessionsByUser {
+    id
+    createdAt
+    metadata {
+      location {
+        country
+        city
+        latidute
+        longitude
+      }
+      device {
+        browser
+        os
+      }
+      ip
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindSessionsByUserQuery__
+ *
+ * To run a query within a React component, call `useFindSessionsByUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindSessionsByUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindSessionsByUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindSessionsByUserQuery(baseOptions?: Apollo.QueryHookOptions<FindSessionsByUserQuery, FindSessionsByUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindSessionsByUserQuery, FindSessionsByUserQueryVariables>(FindSessionsByUserDocument, options);
+      }
+export function useFindSessionsByUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindSessionsByUserQuery, FindSessionsByUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindSessionsByUserQuery, FindSessionsByUserQueryVariables>(FindSessionsByUserDocument, options);
+        }
+export function useFindSessionsByUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindSessionsByUserQuery, FindSessionsByUserQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindSessionsByUserQuery, FindSessionsByUserQueryVariables>(FindSessionsByUserDocument, options);
+        }
+export type FindSessionsByUserQueryHookResult = ReturnType<typeof useFindSessionsByUserQuery>;
+export type FindSessionsByUserLazyQueryHookResult = ReturnType<typeof useFindSessionsByUserLazyQuery>;
+export type FindSessionsByUserSuspenseQueryHookResult = ReturnType<typeof useFindSessionsByUserSuspenseQuery>;
+export type FindSessionsByUserQueryResult = Apollo.QueryResult<FindSessionsByUserQuery, FindSessionsByUserQueryVariables>;
+export const FindSocialLinksDocument = gql`
+    query FindSocialLinks {
+  findSocialLinks {
+    id
+    title
+    url
+    position
+  }
+}
+    `;
+
+/**
+ * __useFindSocialLinksQuery__
+ *
+ * To run a query within a React component, call `useFindSocialLinksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindSocialLinksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindSocialLinksQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindSocialLinksQuery(baseOptions?: Apollo.QueryHookOptions<FindSocialLinksQuery, FindSocialLinksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindSocialLinksQuery, FindSocialLinksQueryVariables>(FindSocialLinksDocument, options);
+      }
+export function useFindSocialLinksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindSocialLinksQuery, FindSocialLinksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindSocialLinksQuery, FindSocialLinksQueryVariables>(FindSocialLinksDocument, options);
+        }
+export function useFindSocialLinksSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindSocialLinksQuery, FindSocialLinksQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindSocialLinksQuery, FindSocialLinksQueryVariables>(FindSocialLinksDocument, options);
+        }
+export type FindSocialLinksQueryHookResult = ReturnType<typeof useFindSocialLinksQuery>;
+export type FindSocialLinksLazyQueryHookResult = ReturnType<typeof useFindSocialLinksLazyQuery>;
+export type FindSocialLinksSuspenseQueryHookResult = ReturnType<typeof useFindSocialLinksSuspenseQuery>;
+export type FindSocialLinksQueryResult = Apollo.QueryResult<FindSocialLinksQuery, FindSocialLinksQueryVariables>;
+export const GenerateTotpSecretDocument = gql`
+    query GenerateTotpSecret {
+  generateTotpSecret {
+    qrcodeUrl
+    secret
+  }
+}
+    `;
+
+/**
+ * __useGenerateTotpSecretQuery__
+ *
+ * To run a query within a React component, call `useGenerateTotpSecretQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGenerateTotpSecretQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGenerateTotpSecretQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGenerateTotpSecretQuery(baseOptions?: Apollo.QueryHookOptions<GenerateTotpSecretQuery, GenerateTotpSecretQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GenerateTotpSecretQuery, GenerateTotpSecretQueryVariables>(GenerateTotpSecretDocument, options);
+      }
+export function useGenerateTotpSecretLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GenerateTotpSecretQuery, GenerateTotpSecretQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GenerateTotpSecretQuery, GenerateTotpSecretQueryVariables>(GenerateTotpSecretDocument, options);
+        }
+export function useGenerateTotpSecretSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GenerateTotpSecretQuery, GenerateTotpSecretQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GenerateTotpSecretQuery, GenerateTotpSecretQueryVariables>(GenerateTotpSecretDocument, options);
+        }
+export type GenerateTotpSecretQueryHookResult = ReturnType<typeof useGenerateTotpSecretQuery>;
+export type GenerateTotpSecretLazyQueryHookResult = ReturnType<typeof useGenerateTotpSecretLazyQuery>;
+export type GenerateTotpSecretSuspenseQueryHookResult = ReturnType<typeof useGenerateTotpSecretSuspenseQuery>;
+export type GenerateTotpSecretQueryResult = Apollo.QueryResult<GenerateTotpSecretQuery, GenerateTotpSecretQueryVariables>;

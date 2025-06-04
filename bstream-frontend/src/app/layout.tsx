@@ -7,8 +7,7 @@ import { ApolloClientProvider } from '@/providers/ApolloClientProvider'
 import { ToastProvider } from '@/providers/ToastProvider'
 import { ThemeProvider } from '@/providers/theme-provider'
 
-import '../styles/globals.css'
-import '../styles/themes.css'
+import '@/styles/globals.css'
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -26,6 +25,7 @@ export default async function RootLayout({
 	return (
 		<html lang={locale} suppressHydrationWarning>
 			<body className={GeistSans.variable}>
+				{/* <ColorSwitcher /> */}
 				<ApolloClientProvider>
 					<NextIntlClientProvider messages={messages}>
 						<ThemeProvider

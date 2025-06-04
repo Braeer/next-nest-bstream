@@ -24,6 +24,8 @@ export function useCurrent() {
 		}
 	}, [isAuthenticated, exit, clear])
 
+	console.log('Current user data:', data)
+
 	return {
 		user: data?.findProfile,
 		isLoadingProfile: loading,

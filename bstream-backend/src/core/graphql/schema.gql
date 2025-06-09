@@ -142,7 +142,7 @@ type MakePaymentModel {
 }
 
 type Mutation {
-  changeChatSettings(input: ChangeChatSettingsInput!): Boolean!
+  changeChatSettings(data: ChangeChatSettingsInput!): Boolean!
   changeEmailUser(data: ChangeEmailInput!): Boolean!
   changeNotificationsSettings(data: ChangeNotificationsSettingsInput!): ChangeNotificationsSettingsResponse!
   changePasswordUser(data: ChangePasswordInput!): Boolean!
@@ -374,6 +374,8 @@ type UserModel {
   notifications: [NotificationModel!]!
   password: String!
   socialLinks: [SocialLinkModel!]
+  sponsorshipPlans: [PlanModel!]!
+  sponsorshipSubscriptions: [SubscriptionModel!]!
   stream: StreamModel!
   telegramId: String
   totpSecret: String

@@ -24,7 +24,10 @@ export class AccountService {
 				id
 			},
 			include: {
-				socialLinks: true
+				socialLinks: true,
+				stream: true,
+				notificationSettings: true,
+				sponsorshipPlans: true
 			}
 		})
 
@@ -70,6 +73,9 @@ export class AccountService {
 					create: {
 						title: `Стрим ${username}`
 					}
+				},
+				notificationSettings: {
+					create: {}
 				}
 			}
 		})

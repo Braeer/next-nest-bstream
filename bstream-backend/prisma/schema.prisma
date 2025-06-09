@@ -91,7 +91,7 @@ model NotificationSettings {
   userId String @unique @map("user_id")
 
   siteNotifications     Boolean @default(true) @map("site_notifications")
-  telegramNotifications Boolean @default(true) @map("telegram_notifications")
+  telegramNotifications Boolean @default(false) @map("telegram_notifications")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

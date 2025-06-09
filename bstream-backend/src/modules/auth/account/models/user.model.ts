@@ -3,6 +3,8 @@ import type { User } from '@/prisma/generated'
 import { FollowModel } from '@/src/modules/follow/models/follow.model'
 import { NotificationSettingsModel } from '@/src/modules/notification/models/notification-settings.model'
 import { NotificationModel } from '@/src/modules/notification/models/notification.model'
+import { PlanModel } from '@/src/modules/sponsorship/plan/models/plan.model'
+import { SubscriptionModel } from '@/src/modules/sponsorship/subscription/models/subscription.model'
 import { StreamModel } from '@/src/modules/stream/models/stream.model'
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 
@@ -31,6 +33,12 @@ export class UserModel implements User {
 
 	@Field(() => String, { nullable: true })
 	public telegramId: string
+
+	@Field(() => [PlanModel])
+	public sponsorshipPlans: PlanModel[]
+
+	@Field(() => [SubscriptionModel])
+	public sponsorshipSubscriptions: SubscriptionModel[]
 
 	@Field(() => Boolean)
 	public isVerified: boolean

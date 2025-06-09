@@ -46,7 +46,7 @@ export class ChatResolver {
 	@Mutation(() => Boolean, { name: 'changeChatSettings' })
 	public async changeSettings(
 		@Authorized() user: User,
-		@Args('input') input: ChangeChatSettingsInput
+		@Args('data') input: ChangeChatSettingsInput
 	) {
 		return this.chatService.changeSettings(user, input)
 	}
